@@ -59,7 +59,7 @@ public class YoloV5 {
 
     }
 
-    public List<Detection> run(Mat img) throws OrtException, IOException {
+    public List<Detection> run(Mat img) throws OrtException {
 
         float orgW = (float) img.size().width;
         float orgH = (float) img.size().height;

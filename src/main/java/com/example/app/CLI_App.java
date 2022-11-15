@@ -1,6 +1,9 @@
-package com.example.yolov5;
+package com.example.app;
 
 import ai.onnxruntime.OrtException;
+import com.example.yolov5.Detection;
+import com.example.yolov5.ImageUtil;
+import com.example.yolov5.YoloV5;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
@@ -75,7 +78,7 @@ public class CLI_App {
                 System.out.println(app.gson.toJson(detectionList));
                 Imgcodecs.imwrite("predictions.jpg", img);
             }
-            catch (OrtException | IOException ortException) {
+            catch (OrtException ortException) {
                 ortException.printStackTrace();
             }
 
