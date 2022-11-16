@@ -14,7 +14,7 @@ public class ImageUtil {
         int oldW = src.width();
         int oldH = src.height();
 
-        double r = Math.min((double )width / oldW, (double) height / oldH);
+        double r = Math.min((double) width / oldW, (double) height / oldH);
 
         int newUnpadW = (int) Math.round(oldW * r);
         int newUnpadH = (int) Math.round(oldH * r);
@@ -39,7 +39,7 @@ public class ImageUtil {
         int oldW = src.width();
         int oldH = src.height();
 
-        double r = Math.min((double )width / oldW, (double) height / oldH);
+        double r = Math.min((double) width / oldW, (double) height / oldH);
 
         int newUnpadW = (int) Math.round(oldW * r);
         int newUnpadH = (int) Math.round(oldH * r);
@@ -57,8 +57,8 @@ public class ImageUtil {
 
     }
 
-    public static void whc2cwh (float[] src, float[] dst, int start) {
-        int j=start;
+    public static void whc2cwh(float[] src, float[] dst, int start) {
+        int j = start;
         for (int ch = 0; ch < 3; ++ch) {
             for (int i = ch; i < src.length; i += 3) {
                 dst[j] = src[i];
@@ -67,9 +67,9 @@ public class ImageUtil {
         }
     }
 
-    public static float[] whc2cwh (float[] src) {
+    public static float[] whc2cwh(float[] src) {
         float[] chw = new float[src.length];
-        int j=0;
+        int j = 0;
         for (int ch = 0; ch < 3; ++ch) {
             for (int i = ch; i < src.length; i += 3) {
                 chw[j] = src[i];
@@ -79,9 +79,9 @@ public class ImageUtil {
         return chw;
     }
 
-    public static byte[] whc2cwh (byte[] src) {
+    public static byte[] whc2cwh(byte[] src) {
         byte[] chw = new byte[src.length];
-        int j=0;
+        int j = 0;
         for (int ch = 0; ch < 3; ++ch) {
             for (int i = ch; i < src.length; i += 3) {
                 chw[j] = src[i];
@@ -90,13 +90,14 @@ public class ImageUtil {
         }
         return chw;
     }
+
     public static void drawPredictions(Mat img, List<Detection> detectionList) {
         // debugging image
         for (Detection detection : detectionList) {
 
             float[] bbox = detection.bbox();
             Scalar color = new Scalar(249, 218, 60);
-            Imgproc.rectangle ( img,                    //Matrix obj of the image
+            Imgproc.rectangle(img,                    //Matrix obj of the image
                     new Point(bbox[0], bbox[1]),        //p1
                     new Point(bbox[2], bbox[3]),       //p2
                     color,     //Scalar object for color

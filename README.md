@@ -14,3 +14,20 @@ mvn clean compile
 # API 
 mvn spring-boot:run
 ```
+
+## GUI Demo
+
+
+![](assets/gui.png)
+
+## CLI Demo
+
+![](assets/cli.png)
+
+## Rest API Demo
+
+- Endpoint: `/detection`
+  - `multipart/form-data`
+  - `name="uploadFile"`
+
+![](assets/api.png)

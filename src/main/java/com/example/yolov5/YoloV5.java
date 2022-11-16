@@ -11,22 +11,19 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class YoloV5 {
 
-    private final OrtEnvironment env;
-    private final OrtSession session;
-    private final String inputName;
-
     public static final int INPUT_SIZE = 640;
     public static final int NUM_INPUT_ELEMENTS = 3 * 640 * 640;
     public static final long[] INPUT_SHAPE = {1, 3, 640, 640};
-
     public final float confThreshold;
     public final float nmsThreshold;
     public final OnnxJavaType inputType;
+    private final OrtEnvironment env;
+    private final OrtSession session;
+    private final String inputName;
     public ArrayList<String> labelNames;
 
     OnnxTensor inputTensor;
@@ -59,6 +56,18 @@ public class YoloV5 {
 
     }
 
+    private static int argmax(float[] a) {
+        float re = Float.MIN_VALUE;
+        int arg = -1;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] > re) {
+                re = a[i];
+                arg = i;
+            }
+        }
+        return arg;
+    }
+
     public List<Detection> run(Mat img) throws OrtException {
 
         float orgW = (float) img.size().width;
@@ -74,9 +83,9 @@ public class YoloV5 {
         // Run inference
         float[][] predictions;
 
-        try (OrtSession.Result results = this.session.run(inputContainer)) {
-            predictions = ((float[][][]) results.get(0).getValue())[0];
-        }
+        OrtSession.Result results = this.session.run(inputContainer);
+        predictions = ((float[][][]) results.get(0).getValue())[0];
+
         // postprocessing
         return postprocess(predictions, orgW, orgH, padW, padH, gain);
     }
@@ -93,14 +102,13 @@ public class YoloV5 {
         Map<String, OnnxTensor> container = new HashMap<>();
 
         // if model is quantized
-        if ( this.inputType.equals(OnnxJavaType.UINT8) ) {
+        if (this.inputType.equals(OnnxJavaType.UINT8)) {
             byte[] whc = new byte[NUM_INPUT_ELEMENTS];
             resizedImg.get(0, 0, whc);
             byte[] chw = ImageUtil.whc2cwh(whc);
             ByteBuffer inputBuffer = ByteBuffer.wrap(chw);
             inputTensor = OnnxTensor.createTensor(this.env, inputBuffer, INPUT_SHAPE, this.inputType);
-        }
-        else {
+        } else {
             // Normalization
             resizedImg.convertTo(resizedImg, CvType.CV_32FC1, 1. / 255);
             float[] whc = new float[NUM_INPUT_ELEMENTS];
@@ -176,7 +184,6 @@ public class YoloV5 {
         return detections;
     }
 
-
     private float computeIOU(float[] box1, float[] box2) {
 
         float area1 = (box1[2] - box1[0]) * (box1[3] - box1[1]);
@@ -209,17 +216,5 @@ public class YoloV5 {
         }
 
         return bestBboxes;
-    }
-
-    private static int argmax(float[] a) {
-        float re = Float.MIN_VALUE;
-        int arg = -1;
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] > re) {
-                re = a[i];
-                arg = i;
-            }
-        }
-        return arg;
     }
 }

@@ -4,6 +4,7 @@ import ai.onnxruntime.OrtException;
 import com.example.yolov5.Detection;
 import com.example.yolov5.ImageUtil;
 import com.example.yolov5.YoloV5;
+import com.google.gson.Gson;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
@@ -13,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
-import com.google.gson.Gson;
 
 public class CLI_App {
 
     private YoloV5 inferenceSession;
     private Gson gson;
+
     public CLI_App() {
         try {
 
@@ -26,8 +27,7 @@ public class CLI_App {
             String labelPath = Objects.requireNonNull(SwingApp.class.getResource("/coco.names")).getFile();
             this.inferenceSession = new YoloV5(modelPath, labelPath, 0.25f, 0.45f, -1);
             this.gson = new Gson();
-        }
-        catch (OrtException | IOException exception) {
+        } catch (OrtException | IOException exception) {
             exception.printStackTrace();
             System.exit(1);
         }
@@ -51,23 +51,23 @@ public class CLI_App {
                 System.exit(1);
             }
 
-            if ( "q".equals(input) | "Q".equals(input) ) {
+            if ("q".equals(input) | "Q".equals(input)) {
                 System.out.println("Exit");
                 System.exit(0);
             }
 
             File f = new File(input);
-            if ( !f.exists() ) {
+            if (!f.exists()) {
                 System.out.println("File does not exists: " + input);
                 continue;
             }
-            if ( f.isDirectory() ) {
+            if (f.isDirectory()) {
                 System.out.println(input + " is a directory");
                 continue;
             }
 
             Mat img = Imgcodecs.imread(input, Imgcodecs.IMREAD_COLOR);
-            if (img.dataAddr() == 0 ) {
+            if (img.dataAddr() == 0) {
                 System.out.println("Could not open image: " + input);
                 continue;
             }
@@ -77,8 +77,7 @@ public class CLI_App {
                 ImageUtil.drawPredictions(img, detectionList);
                 System.out.println(app.gson.toJson(detectionList));
                 Imgcodecs.imwrite("predictions.jpg", img);
-            }
-            catch (OrtException ortException) {
+            } catch (OrtException ortException) {
                 ortException.printStackTrace();
             }
 

@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     INVALID_MIME_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "invalid mime type"),
-    INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "invalid file")
-    ;
+    INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "invalid file");
     private final HttpStatus httpStatus;
     private final String message;
 

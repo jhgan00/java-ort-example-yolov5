@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = { CustomException.class })
-    protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
-        log.error("handleCustomException throw CustomException : {}", e.getErrorCode());
+    @ExceptionHandler(value = {UploadFileException.class})
+    protected ResponseEntity<ErrorResponse> handleUploadFileException(UploadFileException e) {
+        log.error("handleUploadFileException throw UploadFileException : {}", e.getErrorCode());
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 }

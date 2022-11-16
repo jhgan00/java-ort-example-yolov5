@@ -34,8 +34,7 @@ public class SwingApp extends JFrame implements ActionListener {
             String modelPath = Objects.requireNonNull(SwingApp.class.getResource("/yolov5s.onnx")).getFile();
             String labelPath = Objects.requireNonNull(SwingApp.class.getResource("/coco.names")).getFile();
             inferenceSession = new YoloV5(modelPath, labelPath, 0.25f, 0.45f, -1);
-        }
-        catch (OrtException | IOException exception) {
+        } catch (OrtException | IOException exception) {
             exception.printStackTrace();
             System.exit(1);
         }
@@ -90,8 +89,7 @@ public class SwingApp extends JFrame implements ActionListener {
                 try {
                     List<Detection> detectionList = inferenceSession.run(img);
                     ImageUtil.drawPredictions(img, detectionList);
-                }
-                catch (OrtException ortException) {
+                } catch (OrtException ortException) {
                     ortException.printStackTrace();
                 }
 
