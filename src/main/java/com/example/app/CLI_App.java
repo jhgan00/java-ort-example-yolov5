@@ -1,9 +1,9 @@
 package com.example.app;
 
 import ai.onnxruntime.OrtException;
-import com.example.yolov5.Detection;
-import com.example.yolov5.ImageUtil;
-import com.example.yolov5.YoloV5;
+import com.example.yolo.Detection;
+import com.example.yolo.ImageUtil;
+import com.example.yolo.YoloV5;
 import com.google.gson.Gson;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;

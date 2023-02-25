@@ -1,4 +1,4 @@
-package com.example.yolov5;
+package com.example.yolo;
 
 public record Detection(String label, float[] bbox, float confidence) {
 

@@ -1,8 +1,8 @@
 package com.example.api;
 
 import ai.onnxruntime.OrtException;
-import com.example.yolov5.Detection;
-import com.example.yolov5.YoloV5;
+import com.example.yolo.Detection;
+import com.example.yolo.YoloV5;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;

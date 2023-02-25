@@ -1,9 +1,7 @@
 package com.example.app;
 
 import ai.onnxruntime.OrtException;
-import com.example.yolov5.Detection;
-import com.example.yolov5.ImageUtil;
-import com.example.yolov5.YoloV5;
+import com.example.yolo.*;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -22,7 +20,7 @@ public class SwingApp extends JFrame implements ActionListener {
 
     private final JMenuItem openItem;
     private final JLabel label;
-    private YoloV5 inferenceSession;
+    private Yolo inferenceSession;
 
     private final int MAX_SIZE = 720;
 

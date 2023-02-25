@@ -1,4 +1,4 @@
-package com.example.yolov5;
+package com.example.yolo;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
