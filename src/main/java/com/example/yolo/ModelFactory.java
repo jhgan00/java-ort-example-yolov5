@@ -2,9 +2,10 @@ package com.example.yolo;
 
 import ai.onnxruntime.OrtException;
 import com.example.app.ConfigReader;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Properties;
 
 public class ModelFactory {
@@ -16,8 +17,10 @@ public class ModelFactory {
         Properties properties = configReader.readProperties(propertiesFilePath);
 
         String modelName = properties.getProperty("modelName");
-        String modelPath = Objects.requireNonNull(getClass().getClassLoader().getResource(properties.getProperty("modelPath"))).getFile();
-        String labelPath = Objects.requireNonNull(getClass().getClassLoader().getResource(properties.getProperty("labelPath"))).getFile();
+        File file = ResourceUtils.getFile("classpath:" + properties.getProperty("modelPath"));
+        File file2 = ResourceUtils.getFile("classpath:coco.names");
+        String modelPath =  String.valueOf((file));
+        String labelPath =  String.valueOf((file2));
         float confThreshold = Float.parseFloat(properties.getProperty("confThreshold"));
         float nmsThreshold = Float.parseFloat(properties.getProperty("nmsThreshold"));
         int gpuDeviceId = Integer.parseInt(properties.getProperty("gpuDeviceId"));
